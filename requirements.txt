@@ -1,0 +1,6 @@
+Django==4.2.4
+django-bootstrap5==23.3
+django-environ==0.10.0
+dj-database-url==2.1.0
+Pillow==10.0.0
+gensim==4.3.2

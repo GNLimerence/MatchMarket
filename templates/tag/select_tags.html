@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post" action="{%url 'match'%}">
+    {% csrf_token %}
+    {% for tag in tag_list %}
+    <input type="checkbox" name="tags" value="{{ tag.id }}"> {{ tag.name }}<br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

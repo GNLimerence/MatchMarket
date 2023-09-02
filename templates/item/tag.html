@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-check form-switch">
+        {% csrf_token %}
+        {% for tag in tag_list %}
+        <label class="form-check-label" for="flexSwitchCheckDefault"><input class="form-check-input" type="checkbox"
+                name="tag_list" id="flexSwitchCheckDefault" value="{{tag.id}}">{{tag.name}}</label><br>
+        {% endfor %}
+    </div>
+    <input type="submit" name="button" class="btn btn-primary" value="送信">
+</form>
+{% endblock %}

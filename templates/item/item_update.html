@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Edit Item</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <p>
+                <button type="submit" class="btn btn-primary my-2">タグ選択画面へ</button>
+              </p>
+        </form>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+  {% endblock %}

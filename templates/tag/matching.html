@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .custom-image-size {
+        width: 400px;           /* 追加 */
+        height: 350px;          /* 追加 */
+        max-width: 100%;        /* 100% に変更 */
+        max-height: 100%;       /* 100% に変更 */
+        object-fit: contain;    /* 追加 */
+        border-radius: 1%; 
+        margin: 0 auto;
+    }
+
+    .text-box {
+        border: 1px solid #e5e5e5;
+        padding: 10px;
+        height: 400px;
+        overflow-y: auto;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .custom-card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
+    }
+
+    .custom-btn {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+
+
+
+</style>
+
+<div class="container mt-3">
+    <div class="card custom-card">
+        <div class="card-header">
+            <h1 id="item_name" class="text-center"></h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="item_img" class="custom-image-size img-fluid justify-content-center d-flex" src="" alt="Item Image">
+                    <h4 class="mt-3 text-center" id="item_value"></h4>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="text-box" id="item_text"></div>
+                </div>
+            </div>
+            <p id="item_user"></p>
+        </div>
+    </div>
+
+    <div class="button-container mt-3">
+        <button class="btn btn-danger btn-lg custom-btn" id="next-button">Next Data</button>
+
+        <form method="POST" action="{%url 'match_succes'%}" class="ml-auto">
+            {% csrf_token %}
+            <input type="hidden" value="" id="user_id" name="user_id" />
+            <input type="hidden" value="" id="item_id" name="item_id" />
+            <input class="btn btn-success btn-lg custom-btn" type="submit" value="Match">
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var currentIndex = 0;
+        var data = JSON.parse('{{ items|safe }}');
+        console.log(data);
+
+        function displayData(index) {
+            if (index < data.length) {
+                document.getElementById('item_name').innerHTML = data[index].name;
+                document.getElementById('item_text').innerHTML = data[index].text;
+                document.getElementById('item_img').src = data[index].image;  
+                document.getElementById('item_value').innerHTML = data[index].value + "円";
+                document.getElementById('item_user').innerHTML = "出品者: " + data[index].user; 
+                document.getElementById('item_id').value = data[index].item_id;
+                document.getElementById('user_id').value = data[index].user_id;
+                currentIndex = index;
+            }
+        }
+
+        $('#next-button').click(function () {
+            displayData(currentIndex + 1);
+        });
+
+        // ページ読み込み時にデータを取得して表示
+        $.ajax({
+            success: function () {
+                displayData(currentIndex);
+            }
+        });
+    });
+</script>
+{% endblock %}

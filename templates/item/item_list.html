@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <style>
+    .bd-placeholder-img {
+      display: flex;          /* Flexboxを利用してテキストを中央に配置 */
+      align-items: center;    /* 垂直方向中央揃え */
+      justify-content: center; /* 水平方向中央揃え */
+
+      width: 100%;  /* 画像の幅をカードの幅に合わせる */
+      height: 100%;
+      max-height: 300px;  /* 画像の最大高さを設定 */
+      object-fit: contain;  
+      display: block;  /* ブロックレベル要素として表示 */
+      margin: 0 auto;  /* 水平方向に中央寄せ */
+      background-color: #323F4E;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .b-example-divider {
+      width: 100%;
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-bd-primary {
+      --bd-violet-bg: #712cf9;
+      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+      --bs-btn-font-weight: 600;
+      --bs-btn-color: var(--bs-white);
+      --bs-btn-bg: var(--bd-violet-bg);
+      --bs-btn-border-color: var(--bd-violet-bg);
+      --bs-btn-hover-color: var(--bs-white);
+      --bs-btn-hover-bg: #6528e0;
+      --bs-btn-hover-border-color: #6528e0;
+      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+      --bs-btn-active-color: var(--bs-btn-hover-color);
+      --bs-btn-active-bg: #5a23c8;
+      --bs-btn-active-border-color: #5a23c8;
+    }
+    .bd-mode-toggle {
+      z-index: 1500;
+    }
+    .card-fix {
+      height: 400px;  /* あなたの希望する高さに設定してください */
+      overflow: hidden;
+    }
+
+  
+  </style>
+  <body>
+
+<!--以下チェック完了-->
+
+<main>
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Item List</h1>
+        <p>
+          <a href="{% url 'item_add' %}" class="btn btn-primary my-2">add item</a>
+          <!--<a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!--itemをforタグで回す-->
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% for object in object_list %}
+        <div class="col">
+          <div class="card shadow-sm card-fix d-flex flex-column">
+            <img class="bd-placeholder-img card-img-top" src="{{ object.image.url }}" alt="Image for {{ object.name }}">
+
+            <div class="card-body card-body-fix flex-grow-1 d-flex flex-column">
+              <h4 class="card-text text-center border-bottom">{{object.name}}</h4>
+              <div class="d-flex justify-content-between align-items-center mt-auto">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'item_edit' object.pk %}'">Edit</button>
+                </div>
+                <h4 class="card-text text-center border-bottom">{{object.value}}円</h4>
+
+                <small class="text-body-secondary">{{object.created_at}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+</main>
+    </body>
+    {% endblock %}
+

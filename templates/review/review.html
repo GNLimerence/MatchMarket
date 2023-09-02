@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="review-container">
+    <div class="review-form-container">
+        <form id="review-form" method=POST>
+            {%csrf_token%}
+            <input type="hidden" name="rater" value="{{ request.user.id }}">
+            <input type="hidden" name="evaluator" value="{{ matching.seller.id }}">
+            <div class="rating">
+                <span class="star" data-score="1">&#9733;</span>
+                <span class="star" data-score="2">&#9733;</span>
+                <span class="star" data-score="3">&#9733;</span>
+                <span class="star" data-score="4">&#9733;</span>
+                <span class="star" data-score="5">&#9733;</span>
+            </div>
+            <textarea name="text" class="review-textarea" placeholder="Review" required></textarea>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .review-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .review-form-container {
+        width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    .review-textarea {
+        width: 100%;
+        height: 150px;
+        font-size: 16px;
+        padding: 10px;
+        resize: vertical;
+    }
+
+    .submit-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+
+
+
+.rating {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.star {
+    cursor: pointer;
+    color: gray;
+    transition: color 0.2s;
+}
+
+.star:hover {
+    color: orange;
+}
+
+.review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Đảm bảo nội dung căn giữa theo chiều dọc */
+    background-color: #f7f7f7; /* Màu nền */
+}
+
+.review-form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px; /* Độ rộng của khung đánh giá */
+}
+.review-textarea {
+        width: 100%; /* Đảm bảo rằng textarea chiếm toàn bộ chiều ngang của phần tử cha */
+        height: 150px; /* Điều chỉnh chiều cao của textarea tùy ý */
+        font-size: 16px; /* Kích thước chữ trong textarea */
+        padding: 10px; /* Khoảng cách giữa nội dung và viền của textarea */
+        resize: vertical; 
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewForm = document.getElementById('review-form');
+    const stars = document.querySelectorAll('.star');
+
+    let selectedScore = 0;
+
+    stars.forEach((star) => {
+        star.addEventListener('click', () => {
+            selectedScore = parseInt(star.getAttribute('data-score'));
+            updateStarColors();
+            document.getElementById('review-score').value = selectedScore;
+        });
+    });
+
+    function updateStarColors() {
+        stars.forEach((star, index) => {
+            if (index < selectedScore) {
+                star.style.color = 'orange';
+            } else {
+                star.style.color = 'gray';
+            }
+        });
+    }
+
+    ReviewForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(ReviewForm);
+        const matchingId = ReviewForm.getAttribute('data-matching-id');
+        const url = `/rate/${matchingId}/`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('レビューが送信されました。');
+                reviewForm.reset();
+                selectedScore = 0;
+                updateStarColors();
+                
+            } else {
+                alert('レビューの送信中にエラーが発生しました。');
+            }
+        } catch (error) {
+            console.error('エラー:', error);
+        }
+    });
+});
+</script>
+
+{% endblock %}
+
+

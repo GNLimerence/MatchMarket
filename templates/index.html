@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        padding: 20px;
+        background-color: ;
+        background-size: cover;
+    }
+
+    .main-content {
+        text-align: center;
+        padding: 40px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .actions {
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-right: 15px;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #008000
+;
+    }
+
+    .btn-link {
+        background-color: transparent;
+        color: #007bff;
+        text-decoration: underline;
+    }
+    .user-info {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .user-info p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .user-info a {
+            display: inline-block;
+            margin-top: 5px;
+            text-decoration: none;
+            color: #FFFF;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .user-info a:hover {
+            color: #0056b3;
+        }
+        .user-info2 {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .user-info2 p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .user-info2 a {
+            display: inline-block;
+            margin-top: 5px;
+            text-decoration: none;
+            color:  #007bff;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .user-info2 a:hover {
+            color: #0056b3;
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="actions">
+                <a href="{% url 'item_add' %}" class="btn btn-primary">商品を出品する</a>
+                <a href="{% url 'select_tags' %}" class="btn btn-secondary">商品を購入する</a>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="user-info2">
+                <p>{{ user.get_username }}でログイン中</p>
+                <a href="{% url 'logout' %}" class="btn btn-link">ログアウト</a>
+            </div>
+            {% else %}
+            <div class="user-info">
+                <p>ログインしていません</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">ログイン</a>
+                <a href="{% url 'register' %}" class="btn btn-secondary">ユーザー登録</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+{% endblock content %}

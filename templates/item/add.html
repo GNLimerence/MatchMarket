@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load django_bootstrap5 %}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Add Item</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <p>
+                <button type="submit" class="btn btn-primary my-2">追加する</button>
+              </p>
+        </form>
+        
+      </div>
+    </div>
+    
+  </section>
+
+{% endblock content %}

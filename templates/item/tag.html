@@ -1,13 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        padding: 20px;
+        background-color: ;
+        background-size: cover;
+    }
+        .main-content {
+        padding: 40px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 100%;
+    }
+</style>
 <form method="POST" enctype="multipart/form-data">
-    <div class="form-check form-switch">
-        {% csrf_token %}
-        {% for tag in tag_list %}
-        <label class="form-check-label" for="flexSwitchCheckDefault"><input class="form-check-input" type="checkbox"
-                name="tag_list" id="flexSwitchCheckDefault" value="{{tag.id}}">{{tag.name}}</label><br>
-        {% endfor %}
+    <div class="container">
+        <div class="main-content">
+            <div class="form-check form-switch">
+                {% csrf_token %}
+                {% for tag in tag_list %}
+                <label class="form-check-label" for="flexSwitchCheckDefault"><input class="form-check-input" type="checkbox"
+                        name="tag_list" id="flexSwitchCheckDefault" value="{{tag.id}}">{{tag.name}}</label><br>
+                {% endfor %}
+            </div>
+            <br/>
+            <input type="submit" name="button" class="btn btn-primary" value="送信">
+        </div>
     </div>
-    <input type="submit" name="button" class="btn btn-primary" value="送信">
 </form>
 {% endblock %}

@@ -1,12 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+        .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        padding: 20px;
+        background-color: ;
+        background-size: cover;
+    }
+        .main-content {
+        text-align: center;
+        padding: 40px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 100%;
+    }
+</style>
 <form method="post" action="{%url 'match'%}">
     {% csrf_token %}
-    {% for tag in tag_list %}
-    <input type="checkbox" name="tags" value="{{ tag.id }}"> {{ tag.name }}<br>
-    {% endfor %}
-    <input type="submit" value="Submit">
+    <div class="container">
+        <div class="main-content">
+        {% for tag in tag_list %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="tags" value="{{ tag.id }}" id="tags1">
+              <label class="form-check-label" for="tags1">
+                {{tag.name}}
+              </label>
+            </div>
+        {% endfor %}
+            <br/>
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
+    </div>
 </form>
-
 {% endblock %}

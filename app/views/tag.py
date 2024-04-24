@@ -47,7 +47,10 @@ def matching(request):
                     print(tag.name +" "+post_tag)
                     per += model.similarity(tag.name, post_tag)
                     count += 1
-            per /= count
+            try:
+                per /= count
+            except ZeroDivisionError:
+                per = 0
             data.append({
                 "item_id" : item.id,
                 "user_id" : user.id,

@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 class="text-center">Login</h1>
-<form action="" , method=POST class="text-center">
-    {% csrf_token %}
-    <div>
-        <label>ユーザー名</label>
-        <input type="text" , name="username">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="border-radius: 10px;">
+                <div class="card-header text-center" style="background-color: #323F4E; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                    <h1 class="text-white">Login</h1>
+                </div>
+                <div class="card-body" style="padding: 2rem;">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">ユーザー名</label>
+                            <input type="text" id="username" name="username" class="form-control" style="border-radius: 5px; border: 1px solid #323F4E;">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="password">パスワード</label>
+                            <input type="password" id="password" name="password" class="form-control" style="border-radius: 5px; border: 1px solid #323F4E;">
+                        </div>
+                        <div class="form-group mt-4 text-center">
+                            <button type="submit" class="btn btn-block" style="background-color: #323F4E; border-color: #323F4E; color: white; border-radius: 5px;">Login</button>
+                        </div>
+                        <div class="form-group mt-3 text-center">
+                            <a href="{% url 'register' %}" style="color: #323F4E; text-decoration: none;">Register</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <br />
-    <div>
-        <label>パスワード</label>
-        <input type="password" , name="password">
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Login</button><br>
-    <a href="{% url 'register' %}">Register</a>
-</form>
-</body>
+</div>
 
 {% endblock content %}
